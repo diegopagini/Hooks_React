@@ -14,7 +14,7 @@ export const MultipleCustomHooks = () => {
 
 	// !!data es para preguntar si efectivamente existe la data
 	const { author, quote } = !!data && data[0];
-	console.log(author, quote, counter, increment);
+	// console.log(author, quote, counter, increment);
 
 	return (
 		<div>
