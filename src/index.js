@@ -11,6 +11,8 @@ import ReactDOM from 'react-dom';
 // import { FocusScreen } from './components/04-useRef/FocusScreen';
 // import { RealExampleRef } from './components/04-useRef/RealExampleRef';
 // import { LayoutEffect } from './components/05-useLayoutEffect/LayoutEffect';
-import { Memorize } from './components/06-memos/Memorize';
+// import { Memorize } from './components/06-memos/Memorize';
+// import { MemoHook } from './components/06-useMemos/MemoHook';
+import { CallbackHook } from './components/06-useMemos/CallbackHook';
 
-ReactDOM.render(<Memorize />, document.getElementById('root'));
+ReactDOM.render(<CallbackHook />, document.getElementById('root'));
