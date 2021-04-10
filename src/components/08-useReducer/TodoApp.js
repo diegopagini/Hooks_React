@@ -1,30 +1,49 @@
 /** @format */
 
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { todoReducer } from './todoReducer';
+import { useForm } from '../../hooks/useForm';
 import './styles.css';
 
 // Punto inicial de la App
-const initialState = [
-	{
-		id: new Date().getTime(),
-		desc: 'Aprender React',
-		done: false,
-	},
-];
+const init = () => {
+	// return [
+	// 	{
+	// 		id: new Date().getTime(),
+	// 		desc: 'Aprender React',
+	// 		done: false,
+	// 	},
+	// ];
+
+	// Trae el listado de TODOS del localStorage
+	return JSON.parse(localStorage.getItem('todos')) || [];
+};
 
 export const TodoApp = () => {
-	//Reducer
-	const [todos, dispatch] = useReducer(todoReducer, initialState);
-	console.log(todos);
+	// Reducer
+	const [todos, dispatch] = useReducer(todoReducer, [], init);
+
+	// Stado del formulario
+	const [{ description }, handleInputChange, reset] = useForm({
+		description: '',
+	});
+
+	// Efecto que vuelve a renderizar solo si hay cambios en los 'todos'
+	useEffect(() => {
+		localStorage.setItem('todos', JSON.stringify(todos));
+	}, [todos]);
 
 	// Control del formulario
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
+		if (description.trim().length <= 1) {
+			return;
+		}
+
 		const newTodo = {
 			id: new Date().getTime(),
-			desc: 'Nueva Tarea',
+			desc: description,
 			done: false,
 		};
 
@@ -34,6 +53,7 @@ export const TodoApp = () => {
 		};
 		// Se llama la accion con el dispatch
 		dispatch(action);
+		reset();
 	};
 
 	return (
@@ -68,6 +88,8 @@ export const TodoApp = () => {
 							className='form-control'
 							placeholder='Aprender...'
 							autoComplete='off'
+							value={description}
+							onChange={handleInputChange}
 						/>
 						<button
 							type='submit'
