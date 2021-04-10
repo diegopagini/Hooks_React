@@ -16,6 +16,7 @@ const todoReducer = (state = initialState, action) => {
 	}
 	return state;
 };
+
 let todos = todoReducer();
 
 // Nuevo Estado
