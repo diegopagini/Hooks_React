@@ -3,6 +3,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { todoReducer } from './todoReducer';
 import { useForm } from '../../hooks/useForm';
+import { TodoList } from './TodoList';
 import './styles.css';
 
 // Punto inicial de la App
@@ -33,7 +34,25 @@ export const TodoApp = () => {
 		localStorage.setItem('todos', JSON.stringify(todos));
 	}, [todos]);
 
-	// Control del formulario
+	// Borrar TODO
+	const handleDelete = (todoId) => {
+		const action = {
+			type: 'delete',
+			payLoad: todoId,
+		};
+
+		dispatch(action);
+	};
+
+	// Marcar como completado
+	const handleToggle = (todoId) => {
+		dispatch({
+			type: 'toggle',
+			payLoad: todoId,
+		});
+	};
+
+	// Agregar TODO
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -63,18 +82,11 @@ export const TodoApp = () => {
 			<div className='row'>
 				{/* Lista de TODOS */}
 				<div className='col-7'>
-					<ul className='list-group list-group-flush'>
-						{todos.map((todo, i) => {
-							return (
-								<li key={todo.id} className='list-group-item'>
-									<p className='text-center'>
-										{i + 1}. {todo.desc}
-									</p>
-									<button className='btn btn-danger'>Borrar</button>
-								</li>
-							);
-						})}
-					</ul>
+					<TodoList
+						todos={todos}
+						handleDelete={handleDelete}
+						handleToggle={handleToggle}
+					/>
 				</div>
 				{/* Formulario para agregar TODOS */}
 				<div className='col-5'>

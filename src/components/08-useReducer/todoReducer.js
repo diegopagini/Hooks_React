@@ -7,6 +7,27 @@ export const todoReducer = (state = [], action) => {
 		case 'add':
 			return [...state, action.payLoad];
 
+		case 'delete':
+			return state.filter((todo) => todo.id !== action.payLoad);
+
+		case 'toggle':
+			return state.map((todo) => {
+				if (todo.id === action.payLoad) {
+					return {
+						...todo,
+						done: !todo.done,
+					};
+				} else {
+					return todo;
+				}
+			});
+
+		// Forma Corta
+		// case 'toggle':
+		// 	return state.map((todo) =>
+		// 		todo.id === action.payLoad ? { ...todo, done: !todo.done } : todo
+		// 	);
+
 		default:
 			return state;
 	}
